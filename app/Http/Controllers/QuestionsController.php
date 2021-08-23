@@ -6,6 +6,7 @@ use App\Constants\Status;
 use Illuminate\Http\Request;
 use App\Models\Question;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
 
 class QuestionsController extends Controller
 {
@@ -53,7 +54,7 @@ class QuestionsController extends Controller
             "typeId" => "required|numeric"
         ]);
 
-        $createdQuestion = Question::create([
+        $createdQuestion = Question::insert([
             "content" => $request->input("content"),
             "type_id" => $request->input("typeId"),
             "status" => Status::Active
@@ -118,11 +119,12 @@ class QuestionsController extends Controller
         $questionsToBeInserted = [];
         foreach ($request->all() as $question) {
             array_push($questionsToBeInserted, [
+                "id" => Str::uuid()->toString(),
                 "content" => $question["content"],
-                "type_id" => $question["typeId"]
+                "type_id" => $question["typeId"],
+                "status" => Status::Active
             ]);
         }
-        // dd($questionsToBeInserted);
         $createdQuestion = Question::insert($questionsToBeInserted);
         return $this->sendSuccessResponse($createdQuestion);
     }
