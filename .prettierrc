@@ -1,0 +1,5 @@
+{
+    "phpVersion": "8.0",
+    "trailingCommaPHP": false,
+    "braceStyle": "psr-2"
+}

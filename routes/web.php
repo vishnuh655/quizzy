@@ -19,10 +19,10 @@ $router->get("/", function () use ($router) {
 
 $router->group(["prefix" => "api"], function () use ($router) {
     $router->get("questions", [
-        "uses" => "QuestionsController@fetchAll",
+        "uses" => "QuestionsController@fetchAll"
     ]);
 
     $router->post("questions", [
-        "uses" => "QuestionsController@storeQuestion",
+        "uses" => "QuestionsController@storeQuestion"
     ]);
 });

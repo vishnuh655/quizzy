@@ -86,13 +86,13 @@ class QuestionsController extends Controller
     {
         $this->validate($request, [
             "content" => "required|string",
-            "typeId" => "required|numeric",
+            "typeId" => "required|numeric"
         ]);
 
         $createdQuestion = Question::create([
             "content" => $request->input("content"),
             "type_id" => $request->input("typeId"),
-            "status" => Status::Active,
+            "status" => Status::Active
         ]);
 
         return $createdQuestion;

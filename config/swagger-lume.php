@@ -1,99 +1,99 @@
 <?php
 
 return [
-    'api' => [
+    "api" => [
         /*
         |--------------------------------------------------------------------------
         | Edit to set the api's title
         |--------------------------------------------------------------------------
          */
-        'title' => 'Swagger Lume API',
+        "title" => "Swagger Lume API"
     ],
 
-    'routes' => [
+    "routes" => [
         /*
         |--------------------------------------------------------------------------
         | Route for accessing api documentation interface
         |--------------------------------------------------------------------------
          */
-        'api' => '/api/documentation',
+        "api" => "/api/documentation",
 
         /*
         |--------------------------------------------------------------------------
         | Route for accessing parsed swagger annotations.
         |--------------------------------------------------------------------------
          */
-        'docs' => '/docs',
+        "docs" => "/docs",
 
         /*
         |--------------------------------------------------------------------------
         | Route for Oauth2 authentication callback.
         |--------------------------------------------------------------------------
         */
-        'oauth2_callback' => '/api/oauth2-callback',
+        "oauth2_callback" => "/api/oauth2-callback",
 
         /*
         |--------------------------------------------------------------------------
         | Route for serving assets
         |--------------------------------------------------------------------------
         */
-        'assets' => '/swagger-ui-assets',
+        "assets" => "/swagger-ui-assets",
 
         /*
         |--------------------------------------------------------------------------
         | Middleware allows to prevent unexpected access to API documentation
         |--------------------------------------------------------------------------
          */
-        'middleware' => [
-            'api' => [],
-            'asset' => [],
-            'docs' => [],
-            'oauth2_callback' => [],
-        ],
+        "middleware" => [
+            "api" => [],
+            "asset" => [],
+            "docs" => [],
+            "oauth2_callback" => []
+        ]
     ],
 
-    'paths' => [
+    "paths" => [
         /*
         |--------------------------------------------------------------------------
         | Absolute path to location where parsed swagger annotations will be stored
         |--------------------------------------------------------------------------
          */
-        'docs' => storage_path('api-docs'),
+        "docs" => storage_path("api-docs"),
 
         /*
         |--------------------------------------------------------------------------
         | File name of the generated json documentation file
         |--------------------------------------------------------------------------
         */
-        'docs_json' => 'api-docs.json',
+        "docs_json" => "api-docs.json",
 
         /*
         |--------------------------------------------------------------------------
         | Absolute path to directory containing the swagger annotations are stored.
         |--------------------------------------------------------------------------
          */
-        'annotations' => base_path('app'),
+        "annotations" => base_path("app"),
 
         /*
         |--------------------------------------------------------------------------
         | Absolute path to directories that you would like to exclude from swagger generation
         |--------------------------------------------------------------------------
          */
-        'excludes' => [],
+        "excludes" => [],
 
         /*
         |--------------------------------------------------------------------------
         | Edit to set the swagger scan base path
         |--------------------------------------------------------------------------
         */
-        'base' => env('L5_SWAGGER_BASE_PATH', null),
+        "base" => env("L5_SWAGGER_BASE_PATH", null),
 
         /*
         |--------------------------------------------------------------------------
         | Absolute path to directory where to export views
         |--------------------------------------------------------------------------
          */
-        'views' => base_path('resources/views/vendor/swagger-lume'),
+        "views" => base_path("resources/views/vendor/swagger-lume")
     ],
 
     /*
@@ -101,7 +101,7 @@ return [
     | API security definitions. Will be generated into documentation file.
     |--------------------------------------------------------------------------
     */
-    'security' => [
+    "security" => [
         /*
         |--------------------------------------------------------------------------
         | Examples of Security definitions
@@ -125,7 +125,6 @@ return [
                 'write:projects' => 'modify projects in your account',
             ]
         ],*/
-
         /* Open API 3.0 support
         'passport' => [ // Unique name of security
             'type' => 'oauth2', // The type of the security scheme. Valid values are "basic", "apiKey" or "oauth2".
@@ -149,21 +148,21 @@ return [
     | Turn this off to remove swagger generation on production
     |--------------------------------------------------------------------------
      */
-    'generate_always' => env('SWAGGER_GENERATE_ALWAYS', false),
+    "generate_always" => env("SWAGGER_GENERATE_ALWAYS", false),
 
     /*
     |--------------------------------------------------------------------------
     | Edit to set the swagger version number
     |--------------------------------------------------------------------------
      */
-    'swagger_version' => env('SWAGGER_VERSION', '3.0'),
+    "swagger_version" => env("SWAGGER_VERSION", "3.0"),
 
     /*
     |--------------------------------------------------------------------------
     | Edit to trust the proxy's ip address - needed for AWS Load Balancer
     |--------------------------------------------------------------------------
      */
-    'proxy' => false,
+    "proxy" => false,
 
     /*
     |--------------------------------------------------------------------------
@@ -172,7 +171,7 @@ return [
     |--------------------------------------------------------------------------
     */
 
-    'additional_config_url' => null,
+    "additional_config_url" => null,
 
     /*
     |--------------------------------------------------------------------------
@@ -182,7 +181,7 @@ return [
     |--------------------------------------------------------------------------
     */
 
-    'operations_sort' => env('L5_SWAGGER_OPERATIONS_SORT', null),
+    "operations_sort" => env("L5_SWAGGER_OPERATIONS_SORT", null),
 
     /*
     |--------------------------------------------------------------------------
@@ -191,14 +190,14 @@ return [
     |--------------------------------------------------------------------------
     */
 
-    'validator_url' => null,
+    "validator_url" => null,
 
     /*
     |--------------------------------------------------------------------------
     | Uncomment to add constants which can be used in anotations
     |--------------------------------------------------------------------------
      */
-    'constants' => [
+    "constants" => [
         // 'SWAGGER_LUME_CONST_HOST' => env('SWAGGER_LUME_CONST_HOST', 'http://my-default-host.com'),
-    ],
+    ]
 ];
