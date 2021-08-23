@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Constants\Status;
 use Illuminate\Http\Request;
 use App\Models\Question;
+use Illuminate\Support\Facades\Validator;
 
 class QuestionsController extends Controller
 {
@@ -45,6 +46,22 @@ class QuestionsController extends Controller
         return Question::all();
     }
 
+    public function storeQuestion(Request $request)
+    {
+        $this->validate($request, [
+            "content" => "required|string",
+            "typeId" => "required|numeric"
+        ]);
+
+        $createdQuestion = Question::create([
+            "content" => $request->input("content"),
+            "type_id" => $request->input("typeId"),
+            "status" => Status::Active
+        ]);
+
+        return $createdQuestion;
+    }
+
     /**
      * @OA\Post(
      *     path="/api/questions",
@@ -55,13 +72,18 @@ class QuestionsController extends Controller
      *         required=true,
      *         description="Data required for creating the question",
      *         @OA\JsonContent(
-     *              @OA\Property(
-     *                  property="content",
-     *                  type="string"
-     *              ),
-     *              @OA\Property(
-     *                  property="typeId",
-     *                  type="integer"
+     *              type="array",
+     *              @OA\Items(
+     *                 @OA\Property(
+     *                      property="content",
+     *                      type="string",
+     *                      example="Which popular video game franchise has released games with the subtitles World At War and Black Ops?"
+     *                 ),
+     *                  @OA\Property(
+     *                      property="typeId",
+     *                      type="integer",
+     *                      example="1"
+     *                 ),
      *              ),
      *          ),
      *     ),
@@ -82,19 +104,26 @@ class QuestionsController extends Controller
      *     },
      * )
      */
-    public function storeQuestion(Request $request)
+    public function storeQuestions(Request $request)
     {
-        $this->validate($request, [
-            "content" => "required|string",
-            "typeId" => "required|numeric"
+        $validator = Validator::make($request->all(), [
+            "*.content" => "required|string",
+            "*.typeId" => "required|numeric"
         ]);
 
-        $createdQuestion = Question::create([
-            "content" => $request->input("content"),
-            "type_id" => $request->input("typeId"),
-            "status" => Status::Active
-        ]);
+        if ($validator->fails()) {
+            return $this->sendValidationResponse($validator->errors());
+        }
 
-        return $createdQuestion;
+        $questionsToBeInserted = [];
+        foreach ($request->all() as $question) {
+            array_push($questionsToBeInserted, [
+                "content" => $question["content"],
+                "type_id" => $question["typeId"]
+            ]);
+        }
+        // dd($questionsToBeInserted);
+        $createdQuestion = Question::insert($questionsToBeInserted);
+        return $this->sendSuccessResponse($createdQuestion);
     }
 }

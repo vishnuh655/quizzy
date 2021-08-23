@@ -23,6 +23,6 @@ $router->group(["prefix" => "api"], function () use ($router) {
     ]);
 
     $router->post("questions", [
-        "uses" => "QuestionsController@storeQuestion"
+        "uses" => "QuestionsController@storeQuestions"
     ]);
 });

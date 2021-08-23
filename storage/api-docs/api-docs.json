@@ -37,15 +37,20 @@
                     "content": {
                         "application/json": {
                             "schema": {
-                                "properties": {
-                                    "content": {
-                                        "type": "string"
+                                "type": "array",
+                                "items": {
+                                    "properties": {
+                                        "content": {
+                                            "type": "string",
+                                            "example": "Which popular video game franchise has released games with the subtitles World At War and Black Ops?"
+                                        },
+                                        "typeId": {
+                                            "type": "integer",
+                                            "example": "1"
+                                        }
                                     },
-                                    "typeId": {
-                                        "type": "integer"
-                                    }
-                                },
-                                "type": "object"
+                                    "type": "object"
+                                }
                             }
                         }
                     }
