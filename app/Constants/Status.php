@@ -4,6 +4,6 @@ namespace App\Constants;
 
 class Status
 {
-    const DELETED = 0;
     const ACTIVE = 1;
+    const DELETED = 2;
 }
