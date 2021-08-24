@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Constants\ResponseMessage;
 use App\Constants\Status;
 use Illuminate\Http\Request;
 use App\Models\Question;
@@ -19,6 +20,50 @@ class QuestionsController extends Controller
     {
         //
     }
+
+    /**
+     * @OA\Get(
+     *     path="/api/questions/{questionId}",
+     *     summary="Get Question By Id",
+     *     description="Get Question By Id",
+     *     @OA\Parameter(
+     *         name="questionId",
+     *         in="path",
+     *         description="ID of question that needs to be fetched",
+     *         required=true,
+     *         @OA\Schema(
+     *             type="string"
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="successful operation",
+     *         @OA\Schema(
+     *             type="array"
+     *         ),
+     *     ),
+     *     @OA\Response(
+     *         response="400",
+     *         description="Invalid tag value",
+     *     ),
+     *     security={
+     *         {"petstore_auth": {"write:pets", "read:pets"}}
+     *     },
+     * )
+     */
+    public function fetchById($questionId)
+    {
+        if (!Str::isUuid($questionId)) {
+            return $this->sendValidationFailResponse(
+                ResponseMessage::INVALID_ID
+            );
+        }
+        $questions = Question::find($questionId);
+        return $questions
+            ? $this->sendSuccessResponse($questions)
+            : $this->sendNotFoundResponse();
+    }
+
     /**
      * @OA\Get(
      *     path="/api/questions",
@@ -44,7 +89,8 @@ class QuestionsController extends Controller
      */
     public function fetchAll()
     {
-        return Question::all();
+        $questions = Question::all();
+        return $this->sendSuccessResponse($questions);
     }
 
     /**
@@ -57,18 +103,22 @@ class QuestionsController extends Controller
      *         required=true,
      *         description="Data required for creating the question",
      *         @OA\JsonContent(
-     *              type="array",
-     *              @OA\Items(
-     *                 @OA\Property(
-     *                      property="content",
-     *                      type="string",
-     *                      example="Which popular video game franchise has released games with the subtitles World At War and Black Ops?"
-     *                 ),
-     *                  @OA\Property(
-     *                      property="typeId",
-     *                      type="integer",
-     *                      example="1"
-     *                 ),
+     *              type="object",
+     *              @OA\Property(
+     *                  property="questions",
+     *                  type="array",
+     *                  @OA\Items(
+     *                      @OA\Property(
+     *                          property="content",
+     *                          type="string",
+     *                          example="Which popular video game franchise has released games with the subtitles World At War and Black Ops?"
+     *                      ),
+     *                      @OA\Property(
+     *                          property="typeId",
+     *                          type="integer",
+     *                          example="1"
+     *                      ),
+     *                  ),
      *              ),
      *          ),
      *     ),
@@ -89,24 +139,26 @@ class QuestionsController extends Controller
      *     },
      * )
      */
-    public function storeQuestions(Request $request)
+    public function store(Request $request)
     {
-        $validator = Validator::make($request->all(), [
+        if (!array_key_exists("questions", $request->all())) {
+            return $this->sendErrorResponse(ResponseMessage::INVALID_JSON);
+        }
+        $validator = Validator::make($request->all()["questions"], [
             "*.content" => "required|string",
             "*.typeId" => "required|numeric"
         ]);
-
         if ($validator->fails()) {
-            return $this->sendValidationResponse($validator->errors());
+            return $this->sendValidationFailResponse($validator->errors());
         }
 
         $questionsToBeInserted = [];
-        foreach ($request->all() as $question) {
+        foreach ($request->all()["questions"] as $question) {
             array_push($questionsToBeInserted, [
                 "id" => Str::uuid()->toString(),
                 "content" => $question["content"],
                 "type_id" => $question["typeId"],
-                "status" => Status::Active
+                "status" => Status::ACTIVE
             ]);
         }
         $createdQuestion = Question::insert($questionsToBeInserted);

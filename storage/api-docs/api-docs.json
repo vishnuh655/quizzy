@@ -5,6 +5,40 @@
         "version": "0.1"
     },
     "paths": {
+        "/api/questions/{questionId}": {
+            "get": {
+                "summary": "Get Question By Id",
+                "description": "Get Question By Id",
+                "operationId": "dfea6dd8e01e4d6900ca8705a77bb86f",
+                "parameters": [
+                    {
+                        "name": "questionId",
+                        "in": "path",
+                        "description": "ID of question that needs to be fetched",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "400": {
+                        "description": "Invalid tag value"
+                    }
+                },
+                "security": [
+                    {
+                        "petstore_auth": [
+                            "write:pets",
+                            "read:pets"
+                        ]
+                    }
+                ]
+            }
+        },
         "/api/questions": {
             "get": {
                 "summary": "Get All Questions",
@@ -37,20 +71,25 @@
                     "content": {
                         "application/json": {
                             "schema": {
-                                "type": "array",
-                                "items": {
-                                    "properties": {
-                                        "content": {
-                                            "type": "string",
-                                            "example": "Which popular video game franchise has released games with the subtitles World At War and Black Ops?"
-                                        },
-                                        "typeId": {
-                                            "type": "integer",
-                                            "example": "1"
+                                "properties": {
+                                    "questions": {
+                                        "type": "array",
+                                        "items": {
+                                            "properties": {
+                                                "content": {
+                                                    "type": "string",
+                                                    "example": "Which popular video game franchise has released games with the subtitles World At War and Black Ops?"
+                                                },
+                                                "typeId": {
+                                                    "type": "integer",
+                                                    "example": "1"
+                                                }
+                                            },
+                                            "type": "object"
                                         }
-                                    },
-                                    "type": "object"
-                                }
+                                    }
+                                },
+                                "type": "object"
                             }
                         }
                     }

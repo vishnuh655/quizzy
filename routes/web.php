@@ -22,7 +22,11 @@ $router->group(["prefix" => "api"], function () use ($router) {
         "uses" => "QuestionsController@fetchAll"
     ]);
 
+    $router->get("questions/{questionId}", [
+        "uses" => "QuestionsController@fetchById"
+    ]);
+
     $router->post("questions", [
-        "uses" => "QuestionsController@storeQuestions"
+        "uses" => "QuestionsController@store"
     ]);
 });
