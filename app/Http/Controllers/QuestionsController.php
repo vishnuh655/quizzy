@@ -26,6 +26,7 @@ class QuestionsController extends Controller
      * @OA\Get(
      *     path="/api/questions/{questionId}",
      *     summary="Get Question By Id",
+     *     tags={"Questions"},
      *     description="Get Question By Id",
      *     @OA\Parameter(
      *         name="questionId",
@@ -68,6 +69,7 @@ class QuestionsController extends Controller
     /**
      * @OA\Get(
      *     path="/api/questions",
+     *     tags={"Questions"},
      *     summary="Get All Questions",
      *     description="Get list of all questions",
      *     operationId="findPetsByTags",
@@ -99,6 +101,7 @@ class QuestionsController extends Controller
      *     path="/api/questions",
      *     summary="Create a option",
      *     description="Create a question",
+     *     tags={"Questions"},
      *     operationId="findPetsByTags",
      *     @OA\RequestBody(
      *         required=true,

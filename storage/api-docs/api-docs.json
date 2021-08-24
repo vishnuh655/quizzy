@@ -7,6 +7,9 @@
     "paths": {
         "/api/options/{optionId}": {
             "get": {
+                "tags": [
+                    "Options"
+                ],
                 "summary": "Get Option By Id",
                 "description": "Get Option By Id",
                 "operationId": "d638fe14c9778df8e45011fece4bbc39",
@@ -41,6 +44,9 @@
         },
         "/api/options": {
             "get": {
+                "tags": [
+                    "Options"
+                ],
                 "summary": "Get All Options",
                 "description": "Get list of all options",
                 "operationId": "80bac1f35f9fa744f1a1a70525552f83",
@@ -62,6 +68,9 @@
                 ]
             },
             "post": {
+                "tags": [
+                    "Options"
+                ],
                 "summary": "Create an option",
                 "description": "Create an option(s) for a question",
                 "operationId": "fcfa21f0fb7e8cc122ab6815e24d9a48",
@@ -118,6 +127,9 @@
         },
         "/api/questions/{questionId}": {
             "get": {
+                "tags": [
+                    "Questions"
+                ],
                 "summary": "Get Question By Id",
                 "description": "Get Question By Id",
                 "operationId": "dfea6dd8e01e4d6900ca8705a77bb86f",
@@ -152,6 +164,9 @@
         },
         "/api/questions": {
             "get": {
+                "tags": [
+                    "Questions"
+                ],
                 "summary": "Get All Questions",
                 "description": "Get list of all questions",
                 "operationId": "findPetsByTags",
@@ -173,6 +188,9 @@
                 ]
             },
             "post": {
+                "tags": [
+                    "Questions"
+                ],
                 "summary": "Create a option",
                 "description": "Create a question",
                 "operationId": "findPetsByTags",

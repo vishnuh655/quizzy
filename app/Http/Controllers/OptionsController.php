@@ -26,6 +26,7 @@ class OptionsController extends Controller
      * @OA\Get(
      *     path="/api/options/{optionId}",
      *     summary="Get Option By Id",
+     *     tags={"Options"},
      *     description="Get Option By Id",
      *     @OA\Parameter(
      *         name="optionId",
@@ -69,6 +70,7 @@ class OptionsController extends Controller
      * @OA\Get(
      *     path="/api/options",
      *     summary="Get All Options",
+     *     tags={"Options"},
      *     description="Get list of all options",
      *     @OA\Response(
      *         response=200,
@@ -94,6 +96,7 @@ class OptionsController extends Controller
      *     path="/api/options",
      *     summary="Create an option",
      *     description="Create an option(s) for a question",
+     *     tags={"Options"},
      *     @OA\RequestBody(
      *         required=true,
      *         description="Data required for creating the options for the question",
