@@ -187,6 +187,55 @@
                     }
                 ]
             },
+            "put": {
+                "tags": [
+                    "Questions"
+                ],
+                "summary": "Update attributes of a question",
+                "description": "Update attributes of a question",
+                "operationId": "e668db173a766c0c5630349e73d59aca",
+                "requestBody": {
+                    "description": "Data required for updating the question",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "questionContent": {
+                                        "type": "string",
+                                        "example": "Which popular video game franchise has released games with the subtitles World At War and Black Ops?"
+                                    },
+                                    "typeId": {
+                                        "type": "integer",
+                                        "example": "1"
+                                    },
+                                    "questionId": {
+                                        "type": "string",
+                                        "example": ""
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "400": {
+                        "description": "Invalid tag value"
+                    }
+                },
+                "security": [
+                    {
+                        "petstore_auth": [
+                            "write:pets",
+                            "read:pets"
+                        ]
+                    }
+                ]
+            },
             "post": {
                 "tags": [
                     "Questions"

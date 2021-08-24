@@ -28,6 +28,9 @@ $router->group(["prefix" => "api"], function () use ($router) {
     $router->post("questions", [
         "uses" => "QuestionsController@store"
     ]);
+    $router->put("questions", [
+        "uses" => "QuestionsController@update"
+    ]);
 
     //Options
     $router->post("options", [

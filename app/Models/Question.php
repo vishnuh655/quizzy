@@ -9,6 +9,9 @@ class Question extends Model
 {
     use Uuids;
 
+    const CREATED_AT = "createdAt";
+    const UPDATED_AT = "updatedAt";
+
     /**
      * Indicates whether attributes are snake cased on arrays.
      *

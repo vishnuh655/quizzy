@@ -201,4 +201,75 @@ class QuestionsController extends Controller
         $createdOptions = Option::insert($optionsToBeInserted);
         return $this->sendSuccessResponse($createdOptions && $createdQuestion);
     }
+
+    /**
+     * @OA\Put(
+     *     path="/api/questions",
+     *     tags={"Questions"},
+     *     summary="Update attributes of a question",
+     *     description="Update attributes of a question",
+     *     @OA\RequestBody(
+     *         required=true,
+     *         description="Data required for updating the question",
+     *         @OA\JsonContent(
+     *              type="object",
+     *              @OA\Property(
+     *                  property="questionContent",
+     *                  type="string",
+     *                  example="Which popular video game franchise has released games with the subtitles World At War and Black Ops?"
+     *              ),
+     *              @OA\Property(
+     *                  property="typeId",
+     *                  type="integer",
+     *                  example="1"
+     *              ),
+     *              @OA\Property(
+     *                  property="questionId",
+     *                  type="string",
+     *                  example=""
+     *              ),
+     *          ),
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="successful operation",
+     *         @OA\Schema(
+     *             type="array",
+     *             @OA\Items(ref="#/components/schemas/Pet")
+     *         ),
+     *     ),
+     *     @OA\Response(
+     *         response="400",
+     *         description="Invalid tag value",
+     *     ),
+     *     security={
+     *         {"petstore_auth": {"write:pets", "read:pets"}}
+     *     },
+     * )
+     */
+    public function update(Request $request)
+    {
+        $requestData = $request->all();
+        $validator = Validator::make($requestData, [
+            "questionContent" => "nullable|string",
+            "typeId" => "nullable|numeric",
+            "questionId" => "required|string"
+        ]);
+        if ($validator->fails()) {
+            return $this->sendValidationFailResponse($validator->errors());
+        }
+        if (!Str::isUuid($requestData["questionId"])) {
+            return $this->sendValidationFailResponse(
+                ResponseMessage::INVALID_ID
+            );
+        }
+
+        $question = Question::where(
+            "questionId",
+            $requestData["questionId"]
+        )->update($requestData);
+        return $question
+            ? $this->sendSuccessResponse(ResponseMessage::ITEM_UPDATED)
+            : $this->sendErrorResponse(ResponseMessage::ITEM_UPDATE_FAILED);
+    }
 }
