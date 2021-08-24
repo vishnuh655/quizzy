@@ -228,6 +228,27 @@ class QuestionsController extends Controller
      *                  type="string",
      *                  example=""
      *              ),
+     *              @OA\Property(
+     *                  property="options",
+     *                  type="array",
+     *                  @OA\Items(
+     *                      @OA\Property(
+     *                          property="optionId",
+     *                          type="string",
+     *                          example=""
+     *                      ),
+     *                      @OA\Property(
+     *                          property="optionContent",
+     *                          type="string",
+     *                          example="Call of Duty"
+     *                      ),
+     *                      @OA\Property(
+     *                          property="isAnswer",
+     *                          type="boolean",
+     *                          example="true"
+     *                      ),
+     *                  ),
+     *              ),
      *          ),
      *     ),
      *     @OA\Response(
@@ -253,7 +274,11 @@ class QuestionsController extends Controller
         $validator = Validator::make($requestData, [
             "questionContent" => "nullable|string",
             "typeId" => "nullable|numeric",
-            "questionId" => "required|string"
+            "questionId" => "required|string",
+            "options" => "nullable|array",
+            "options.*.optionId" => "required|string",
+            "options.*.optionContent" => "nullable|string",
+            "options.*.isAnswer" => "nullable|boolean"
         ]);
         if ($validator->fails()) {
             return $this->sendValidationFailResponse($validator->errors());
@@ -263,7 +288,16 @@ class QuestionsController extends Controller
                 ResponseMessage::INVALID_ID
             );
         }
-
+        if (array_key_exists("options", $requestData)) {
+            foreach ($requestData["options"] as $option) {
+                $optionId = $option["optionId"];
+                unset($option["optionId"]);
+                $question = Option::where("optionId", $optionId)->update(
+                    $option
+                );
+            }
+            unset($requestData["options"]);
+        }
         $question = Question::where(
             "questionId",
             $requestData["questionId"]

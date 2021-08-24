@@ -212,6 +212,26 @@
                                     "questionId": {
                                         "type": "string",
                                         "example": ""
+                                    },
+                                    "options": {
+                                        "type": "array",
+                                        "items": {
+                                            "properties": {
+                                                "optionId": {
+                                                    "type": "string",
+                                                    "example": ""
+                                                },
+                                                "optionContent": {
+                                                    "type": "string",
+                                                    "example": "Call of Duty"
+                                                },
+                                                "isAnswer": {
+                                                    "type": "boolean",
+                                                    "example": "true"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
                                     }
                                 },
                                 "type": "object"

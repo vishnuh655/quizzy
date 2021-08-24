@@ -55,6 +55,13 @@ class Option extends Model
     protected $fillable = ["questionId", "optionContent", "isAnswer"];
 
     /**
+     * The attributes that should be cast.
+     *
+     * @var array
+     */
+    protected $casts = ["isAnswer" => "boolean"];
+
+    /**
      * The attributes excluded from the model's JSON form.
      *
      * @var array
