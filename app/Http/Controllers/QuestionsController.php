@@ -47,22 +47,6 @@ class QuestionsController extends Controller
         return Question::all();
     }
 
-    public function storeQuestion(Request $request)
-    {
-        $this->validate($request, [
-            "content" => "required|string",
-            "typeId" => "required|numeric"
-        ]);
-
-        $createdQuestion = Question::insert([
-            "content" => $request->input("content"),
-            "type_id" => $request->input("typeId"),
-            "status" => Status::Active
-        ]);
-
-        return $createdQuestion;
-    }
-
     /**
      * @OA\Post(
      *     path="/api/questions",
