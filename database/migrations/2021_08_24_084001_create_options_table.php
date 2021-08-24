@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateQuestionsTable extends Migration
+class CreateOptionsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,14 @@ class CreateQuestionsTable extends Migration
      */
     public function up()
     {
-        Schema::create("questions", function (Blueprint $table) {
-            $table->uuid("questionId")->primary();
-            $table->text("questionContent");
-            $table->integer("typeId");
-            $table->tinyInteger("status");
+        Schema::create("options", function (Blueprint $table) {
+            $table->uuid("optionId")->primary();
+            $table
+                ->foreignUuid("questionId")
+                ->references("questionId")
+                ->on("questions");
+            $table->text("optionContent");
+            $table->boolean("isAnswer");
             $table
                 ->timestamp("createdAt")
                 ->default(DB::raw("CURRENT_TIMESTAMP"));
@@ -34,6 +37,6 @@ class CreateQuestionsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists("questions");
+        Schema::dropIfExists("options");
     }
 }

@@ -76,7 +76,7 @@
                                         "type": "array",
                                         "items": {
                                             "properties": {
-                                                "content": {
+                                                "questionContent": {
                                                     "type": "string",
                                                     "example": "Which popular video game franchise has released games with the subtitles World At War and Black Ops?"
                                                 },

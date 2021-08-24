@@ -109,7 +109,7 @@ class QuestionsController extends Controller
      *                  type="array",
      *                  @OA\Items(
      *                      @OA\Property(
-     *                          property="content",
+     *                          property="questionContent",
      *                          type="string",
      *                          example="Which popular video game franchise has released games with the subtitles World At War and Black Ops?"
      *                      ),
@@ -145,7 +145,7 @@ class QuestionsController extends Controller
             return $this->sendErrorResponse(ResponseMessage::INVALID_JSON);
         }
         $validator = Validator::make($request->all()["questions"], [
-            "*.content" => "required|string",
+            "*.questionContent" => "required|string",
             "*.typeId" => "required|numeric"
         ]);
         if ($validator->fails()) {
@@ -155,9 +155,9 @@ class QuestionsController extends Controller
         $questionsToBeInserted = [];
         foreach ($request->all()["questions"] as $question) {
             array_push($questionsToBeInserted, [
-                "id" => Str::uuid()->toString(),
-                "content" => $question["content"],
-                "type_id" => $question["typeId"],
+                "questionId" => Str::uuid()->toString(),
+                "questionContent" => $question["questionContent"],
+                "typeId" => $question["typeId"],
                 "status" => Status::ACTIVE
             ]);
         }

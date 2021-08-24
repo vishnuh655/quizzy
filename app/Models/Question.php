@@ -8,6 +8,21 @@ use App\Traits\Uuids;
 class Question extends Model
 {
     use Uuids;
+
+    /**
+     * Indicates whether attributes are snake cased on arrays.
+     *
+     * @var bool
+     */
+    public static $snakeAttributes = false;
+
+    /**
+     * The primary key for the model.
+     *
+     * @var string
+     */
+    protected $primaryKey = "questionId";
+
     /**
      * The table associated with the model.
      *
@@ -34,12 +49,12 @@ class Question extends Model
      *
      * @var array
      */
-    protected $fillable = ["content", "status", "type_id"];
+    protected $fillable = ["content", "status", "typeId"];
 
     /**
      * The attributes excluded from the model's JSON form.
      *
      * @var array
      */
-    protected $hidden = ["created_at", "updated_at"];
+    protected $hidden = ["createdAt", "updatedAt"];
 }
