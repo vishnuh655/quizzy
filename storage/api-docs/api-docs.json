@@ -5,6 +5,117 @@
         "version": "0.1"
     },
     "paths": {
+        "/api/options/{optionId}": {
+            "get": {
+                "summary": "Get Option By Id",
+                "description": "Get Option By Id",
+                "operationId": "d638fe14c9778df8e45011fece4bbc39",
+                "parameters": [
+                    {
+                        "name": "optionId",
+                        "in": "path",
+                        "description": "ID of option that needs to be fetched",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "400": {
+                        "description": "Invalid tag value"
+                    }
+                },
+                "security": [
+                    {
+                        "petstore_auth": [
+                            "write:pets",
+                            "read:pets"
+                        ]
+                    }
+                ]
+            }
+        },
+        "/api/options": {
+            "get": {
+                "summary": "Get All Options",
+                "description": "Get list of all options",
+                "operationId": "80bac1f35f9fa744f1a1a70525552f83",
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "400": {
+                        "description": "Invalid tag value"
+                    }
+                },
+                "security": [
+                    {
+                        "petstore_auth": [
+                            "write:pets",
+                            "read:pets"
+                        ]
+                    }
+                ]
+            },
+            "post": {
+                "summary": "Create an option",
+                "description": "Create an option(s) for a question",
+                "operationId": "fcfa21f0fb7e8cc122ab6815e24d9a48",
+                "requestBody": {
+                    "description": "Data required for creating the options for the question",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "options": {
+                                        "type": "array",
+                                        "items": {
+                                            "properties": {
+                                                "optionContent": {
+                                                    "type": "string",
+                                                    "example": "Call Of Duty"
+                                                },
+                                                "isAnswer": {
+                                                    "type": "boolean",
+                                                    "example": "true"
+                                                },
+                                                "questionId": {
+                                                    "type": "string",
+                                                    "example": ""
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "400": {
+                        "description": "Invalid tag value"
+                    }
+                },
+                "security": [
+                    {
+                        "petstore_auth": [
+                            "write:pets",
+                            "read:pets"
+                        ]
+                    }
+                ]
+            }
+        },
         "/api/questions/{questionId}": {
             "get": {
                 "summary": "Get Question By Id",
@@ -62,7 +173,7 @@
                 ]
             },
             "post": {
-                "summary": "Create a question",
+                "summary": "Create a option",
                 "description": "Create a question",
                 "operationId": "findPetsByTags",
                 "requestBody": {
@@ -83,6 +194,22 @@
                                                 "typeId": {
                                                     "type": "integer",
                                                     "example": "1"
+                                                },
+                                                "options": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "properties": {
+                                                            "optionContent": {
+                                                                "type": "string",
+                                                                "example": "Call Of Duty"
+                                                            },
+                                                            "isAnswer": {
+                                                                "type": "boolean",
+                                                                "example": "true"
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    }
                                                 }
                                             },
                                             "type": "object"

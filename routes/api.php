@@ -18,15 +18,25 @@ $router->get("/", function () use ($router) {
 });
 
 $router->group(["prefix" => "api"], function () use ($router) {
+    //Questions
     $router->get("questions", [
         "uses" => "QuestionsController@fetchAll"
     ]);
-
     $router->get("questions/{questionId}", [
         "uses" => "QuestionsController@fetchById"
     ]);
-
     $router->post("questions", [
         "uses" => "QuestionsController@store"
+    ]);
+
+    //Options
+    $router->post("options", [
+        "uses" => "OptionsController@store"
+    ]);
+    $router->get("options/{optionId}", [
+        "uses" => "OptionsController@fetchById"
+    ]);
+    $router->get("options", [
+        "uses" => "OptionsController@fetchAll"
     ]);
 });

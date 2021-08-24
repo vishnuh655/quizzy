@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use App\Traits\Uuids;
 
-class Question extends Model
+class Option extends Model
 {
     use Uuids;
 
@@ -21,14 +21,14 @@ class Question extends Model
      *
      * @var string
      */
-    protected $primaryKey = "questionId";
+    protected $primaryKey = "optionId";
 
     /**
      * The table associated with the model.
      *
      * @var string
      */
-    protected $table = "questions";
+    protected $table = "options";
 
     /**
      * The "type" of the primary key ID.
@@ -49,7 +49,7 @@ class Question extends Model
      *
      * @var array
      */
-    protected $fillable = ["content", "status", "typeId"];
+    protected $fillable = ["questionId", "optionContent", "isAnswer"];
 
     /**
      * The attributes excluded from the model's JSON form.
@@ -57,9 +57,4 @@ class Question extends Model
      * @var array
      */
     protected $hidden = ["createdAt", "updatedAt"];
-
-    public function options()
-    {
-        return $this->hasMany(Option::class, "questionId", "questionId");
-    }
 }

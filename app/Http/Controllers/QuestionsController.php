@@ -6,6 +6,7 @@ use App\Constants\ResponseMessage;
 use App\Constants\Status;
 use Illuminate\Http\Request;
 use App\Models\Question;
+use App\Models\Option;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 
@@ -89,14 +90,14 @@ class QuestionsController extends Controller
      */
     public function fetchAll()
     {
-        $questions = Question::all();
+        $questions = Question::with("options")->get();
         return $this->sendSuccessResponse($questions);
     }
 
     /**
      * @OA\Post(
      *     path="/api/questions",
-     *     summary="Create a question",
+     *     summary="Create a option",
      *     description="Create a question",
      *     operationId="findPetsByTags",
      *     @OA\RequestBody(
@@ -117,6 +118,22 @@ class QuestionsController extends Controller
      *                          property="typeId",
      *                          type="integer",
      *                          example="1"
+     *                      ),
+     *                      @OA\Property(
+     *                          property="options",
+     *                          type="array",
+     *                          @OA\Items(
+     *                              @OA\Property(
+     *                                  property="optionContent",
+     *                                  type="string",
+     *                                  example="Call Of Duty"
+     *                              ),
+     *                              @OA\Property(
+     *                                  property="isAnswer",
+     *                                  type="boolean",
+     *                                  example="true"
+     *                              ),
+     *                          ),
      *                      ),
      *                  ),
      *              ),
@@ -144,24 +161,41 @@ class QuestionsController extends Controller
         if (!array_key_exists("questions", $request->all())) {
             return $this->sendErrorResponse(ResponseMessage::INVALID_JSON);
         }
-        $validator = Validator::make($request->all()["questions"], [
-            "*.questionContent" => "required|string",
-            "*.typeId" => "required|numeric"
+        $validator = Validator::make($request->all(), [
+            "questions" => "required|array",
+            "questions.*.questionContent" => "required|string",
+            "questions.*.typeId" => "required|numeric",
+            "questions.*.options" => "array",
+            "questions.*.options.*.optionContent" => "required|string",
+            "questions.*.options.*.isAnswer" => "required|boolean"
         ]);
         if ($validator->fails()) {
             return $this->sendValidationFailResponse($validator->errors());
         }
 
         $questionsToBeInserted = [];
+        $optionsToBeInserted = [];
         foreach ($request->all()["questions"] as $question) {
+            $questionId = Str::uuid()->toString();
             array_push($questionsToBeInserted, [
-                "questionId" => Str::uuid()->toString(),
+                "questionId" => $questionId,
                 "questionContent" => $question["questionContent"],
                 "typeId" => $question["typeId"],
                 "status" => Status::ACTIVE
             ]);
+            if (array_key_exists("options", $question)) {
+                foreach ($question["options"] as $option) {
+                    array_push($optionsToBeInserted, [
+                        "optionId" => Str::uuid()->toString(),
+                        "questionId" => $questionId,
+                        "optionContent" => $option["optionContent"],
+                        "isAnswer" => $option["isAnswer"]
+                    ]);
+                }
+            }
         }
         $createdQuestion = Question::insert($questionsToBeInserted);
-        return $this->sendSuccessResponse($createdQuestion);
+        $createdOptions = Option::insert($optionsToBeInserted);
+        return $this->sendSuccessResponse($createdOptions && $createdQuestion);
     }
 }
