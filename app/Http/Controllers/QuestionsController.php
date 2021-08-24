@@ -99,8 +99,8 @@ class QuestionsController extends Controller
     /**
      * @OA\Post(
      *     path="/api/questions",
-     *     summary="Create a option",
-     *     description="Create a question",
+     *     summary="Create a Question",
+     *     description="Create a question or questions with option",
      *     tags={"Questions"},
      *     operationId="findPetsByTags",
      *     @OA\RequestBody(

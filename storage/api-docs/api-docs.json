@@ -191,8 +191,8 @@
                 "tags": [
                     "Questions"
                 ],
-                "summary": "Create a option",
-                "description": "Create a question",
+                "summary": "Create a Question",
+                "description": "Create a question or questions with option",
                 "operationId": "findPetsByTags",
                 "requestBody": {
                     "description": "Data required for creating the question",
