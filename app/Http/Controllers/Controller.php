@@ -14,10 +14,13 @@ class Controller extends BaseController
 
     private function sendResponse($content, $status)
     {
-        return (new Response($content, $status))->header(
-            "Content-Type",
-            "application/json"
-        );
+        return (new Response($content, $status))
+            ->header(
+                "Content-Type",
+                "application/json",
+                "Access-Control-Allow-Origin"
+            )
+            ->header("Access-Control-Allow-Origin", "*");
     }
 
     private function responseBody($status, $data, $responseCode = null)
