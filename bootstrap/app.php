@@ -26,6 +26,9 @@ $app->withFacades();
 $app->withEloquent();
 
 $app->configure("swagger-lume");
+
+$app->configure("cors");
+
 /*
 |--------------------------------------------------------------------------
 | Register Container Bindings
@@ -71,6 +74,8 @@ $app->configure("app");
 |
 */
 
+$app->middleware([Fruitcake\Cors\HandleCors::class]);
+
 // $app->middleware([
 //     App\Http\Middleware\ExampleMiddleware::class
 // ]);
@@ -90,6 +95,7 @@ $app->configure("app");
 |
 */
 $app->register(\SwaggerLume\ServiceProvider::class);
+$app->register(Fruitcake\Cors\CorsServiceProvider::class);
 // $app->register(App\Providers\AppServiceProvider::class);
 // $app->register(App\Providers\AuthServiceProvider::class);
 // $app->register(App\Providers\EventServiceProvider::class);
